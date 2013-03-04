@@ -43,14 +43,14 @@ src_configure() {
 		--localstatedir=/var \
 		--enable-client \
 		--enable-datafiles \
-		--enable-loopback=builtin \
+		--enable-loopback \
 		$(use_enable examples test) \
-		$(use_enable ethernet ethernet builtin) \
-		$(use_enable wifi wifi builtin) \
-		$(use_enable bluetooth bluetooth builtin) \
-		$(use_enable ofono ofono builtin) \
+		$(use_enable ethernet ) \
+		$(use_enable wifi ) \
+		$(use_enable bluetooth ) \
+		$(use_enable ofono ) \
 		$(use_enable openvpn openvpn builtin) \
-		$(use_enable policykit polkit builtin) \
+		$(use_enable policykit polkit) \
 		$(use_enable vpnc vpnc builtin) \
 		$(use_enable debug) \
 		$(use_enable doc gtk-doc) \
