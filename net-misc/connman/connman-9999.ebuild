@@ -8,7 +8,7 @@ AUTOTOOLS_AUTORECONF=1
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/network/${PN}/${PN}.git"
-inherit autotools-utils git-2
+inherit autotools-utils linux-mod git-2
 
 DESCRIPTION="Provides a daemon for managing internet connections"
 HOMEPAGE="http://connman.net"
@@ -16,7 +16,7 @@ HOMEPAGE="http://connman.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="bluetooth debug doc examples +ethernet ofono openvpn policykit threads tools vpnc +wifi"
+IUSE="bluetooth debug doc examples +ethernet neard ofono openvpn pacrunner policykit selinux threads tools vpnc +wifi "
 
 RDEPEND=">=dev-libs/glib-2.16
 	>=sys-apps/dbus-1.2.24
@@ -34,6 +34,8 @@ DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-2.6.39
 	doc? ( dev-util/gtk-doc )"
 
+CONFIG_CHECK="~BRIDGE ~IP_NF_TARGET_MASQUERADE ~NETFILTER ~NF_CONNTRACK_IPV4 ~NF_NAT_IPV4 "
+
 src_prepare() {
 	autotools-utils_src_prepare
 }
@@ -44,18 +46,21 @@ src_configure() {
 		--enable-client \
 		--enable-datafiles \
 		--enable-loopback \
+		$(use_enable bluetooth ) \
+		$(use_enable debug) \
+		$(use_enable doc gtk-doc) \
 		$(use_enable examples test) \
 		$(use_enable ethernet ) \
 		$(use_enable wifi ) \
-		$(use_enable bluetooth ) \
+		$(use_enable neard ) \
 		$(use_enable ofono ) \
-		$(use_enable openvpn openvpn builtin) \
 		$(use_enable policykit polkit) \
-		$(use_enable vpnc vpnc builtin) \
-		$(use_enable debug) \
-		$(use_enable doc gtk-doc) \
+		$(use_enable pacrunner ) \
+		$(use_enable selinux ) \
 		$(use_enable threads) \
 		$(use_enable tools) \
+		$(use_enable openvpn openvpn builtin) \
+		$(use_enable vpnc vpnc builtin) \
 		--disable-iospm \
 		--disable-hh2serial-gps \
 		--disable-openconnect
