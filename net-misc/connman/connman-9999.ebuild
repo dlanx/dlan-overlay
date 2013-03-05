@@ -16,7 +16,7 @@ HOMEPAGE="http://connman.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="bluetooth debug doc examples +ethernet neard ofono openvpn pacrunner policykit selinux threads tools vpnc +wifi "
+IUSE="bluetooth debug doc dundee examples +ethernet neard ofono openvpn pacrunner policykit selinux threads tools vpnc +wifi +wispr -nmcompat"
 
 RDEPEND=">=dev-libs/glib-2.16
 	>=sys-apps/dbus-1.2.24
@@ -34,6 +34,10 @@ DEPEND="${RDEPEND}
 	>=sys-kernel/linux-headers-2.6.39
 	doc? ( dev-util/gtk-doc )"
 
+REQUIRED_USE="
+	dundee?		( bluetooth					)
+"
+
 CONFIG_CHECK="~BRIDGE ~IP_NF_TARGET_MASQUERADE ~NETFILTER ~NF_CONNTRACK_IPV4 ~NF_NAT_IPV4 "
 
 src_prepare() {
@@ -47,11 +51,14 @@ src_configure() {
 		--enable-datafiles \
 		--enable-loopback \
 		$(use_enable bluetooth ) \
+		$(use_enable nmcompat) \
 		$(use_enable debug) \
 		$(use_enable doc gtk-doc) \
+		$(use_enable dundee ) \
 		$(use_enable examples test) \
 		$(use_enable ethernet ) \
 		$(use_enable wifi ) \
+		$(use_enable wispr ) \
 		$(use_enable neard ) \
 		$(use_enable ofono ) \
 		$(use_enable policykit polkit) \
