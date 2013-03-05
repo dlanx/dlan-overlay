@@ -12,7 +12,7 @@ SRC_URI="mirror://kernel/linux/network/${PN}/${P}.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86"
 IUSE="bluetooth debug doc dundee examples +ethernet neard ofono openvpn pacrunner policykit selinux threads tools vpnc +wifi +wispr -nmcompat"
 
 RDEPEND=">=dev-libs/glib-2.16
