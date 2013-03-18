@@ -28,6 +28,8 @@ S="${WORKDIR}/${MY_P}"
 DOCS=( Changes README )
 
 src_prepare() {
+	sed -i -e "/^include_HEADERS/s/ event.h//" Makefile.am || die
+
 	eautoreconf
 }
 
