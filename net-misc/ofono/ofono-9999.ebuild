@@ -65,7 +65,13 @@ src_install() {
 	fi
 
 	if use tools ; then
-		dobin tools/{auto-enable,huawei-audio}
+		dobin tools/auto-enable \
+			tools/huawei-audio \
+			tools/lookup-provider-name \
+			tools/lookup-apn \
+			tools/get-location \
+			tools/qmi \
+			tools/tty-redirector
 	fi
 
 	newinitd "${FILESDIR}"/${PN}.initd ${PN}
