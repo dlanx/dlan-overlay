@@ -1,0 +1,13 @@
+diff --git a/data/db/open-phrase/Makefile.am b/data/db/open-phrase/Makefile.am
+index ded6171..0ce38fa 100644
+--- a/data/db/open-phrase/Makefile.am
++++ b/data/db/open-phrase/Makefile.am
+@@ -33,8 +33,6 @@ $(DBTAR):
+ 
+ stamp-db: $(DBTAR)
+ 	$(AM_V_GEN) \
+-	tar jxfm $(DBTAR); \
+-	mv db/main.db db/$(db_file); \
+ 	touch $@
+ 
+ $(main_db_DATA): stamp-db
