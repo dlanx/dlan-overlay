@@ -6,6 +6,17 @@
   <maintainer>
     <email>DuPol@gmx.de</email>
     <name>Dustin Polke</name>
+    <description>maintainer, assign bugs</description>
+  </maintainer>
+  <maintainer>
+    <email>dennis.yxun@gmail.com</email>
+    <name>Dennis (dlan) Lan</name>
+    <description>maintainer, assign bugs</description>
+  </maintainer>
+  <maintainer>
+    <email>robbat2@gentoo.org</email>
+    <name>Robin Johnson</name>
+    <description>proxy maintainer, CC on bugs</description>
   </maintainer>
   <use>
     <flag name="hesiod">Install hesiod module</flag>
