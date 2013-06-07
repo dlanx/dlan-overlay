@@ -43,6 +43,8 @@ DEPEND="${RDEPEND}
 	sys-devel/flex
 	virtual/yacc"
 
+CONFIG_CHECK="~AUTOFS4_FS"
+
 PATCHES=(
 	# Fix for bug #210762
 	# Upstream reference: http://thread.gmane.org/gmane.linux.kernel.autofs/4203
