@@ -99,7 +99,10 @@ src_configure() {
 		$(use_with sasl)
 		$(use_with hesiod)
 		$(use_enable mount-locking)
+		--disable-ext-env
+		--disable-mount-locking
 		--enable-sloppy-mount
+		--enable-forced-shutdown
 		--enable-ignore-busy
 	)
 	autotools-utils_src_configure
