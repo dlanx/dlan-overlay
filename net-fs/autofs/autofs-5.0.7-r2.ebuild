@@ -97,10 +97,11 @@ src_configure() {
 src_install() {
 	autotools-utils_src_install
 
-	# kernel patches
-	docinto patches
-	dodoc patches/${PN}4-2.6.??{,.?{,?}}-v5-update-????????.patch
-
+	if kernel_is -lt 2 6 30; then
+		# kernel patches
+		docinto patches
+		dodoc patches/${PN}4-2.6.??{,.?{,?}}-v5-update-????????.patch
+	fi
 	newinitd "${FILESDIR}"/autofs5.initd autofs
 	insinto etc/autofs
 	newins "${FILESDIR}"/autofs5-auto.master auto.master
