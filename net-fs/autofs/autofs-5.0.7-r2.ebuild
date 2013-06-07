@@ -68,7 +68,6 @@ PATCHES=(
 
 	"${FILESDIR}"/${P}-add-missing-endif-HAVE_SASL-in-modules-lookup_ldap.c.patch #361899, #468606
 	"${FILESDIR}"/${PN}-5.0.6-revert-ldap.patch #381315
-	"${FILESDIR}"/${PN}-5.0.7-mount-sloppy.patch #453778
 	"${FILESDIR}"/${PN}-5.0.7-sasl-def.patch #469324
 	)
 
@@ -98,6 +97,7 @@ src_configure() {
 		$(use_with sasl)
 		$(use_with hesiod)
 		$(use_enable mount-locking)
+		--enable-sloppy-mount
 		--enable-ignore-busy
 	)
 	autotools-utils_src_configure
