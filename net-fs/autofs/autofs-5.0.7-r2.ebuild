@@ -47,13 +47,6 @@ DEPEND="${RDEPEND}
 CONFIG_CHECK="~AUTOFS4_FS"
 
 PATCHES=(
-	# Upstream Patches, should go to tarball
-	"${FILESDIR}"/${P}-make-dump-maps-check-for-duplicate-indirect-mounts.patch
-	"${FILESDIR}"/${P}-document-allowed-map-sources-in-auto_master.patch
-	"${FILESDIR}"/${P}-add-enable-sloppy-mount-option-to-configure.patch
-	"${FILESDIR}"/${P}-fix-interface-address-null-check.patch
-	"${FILESDIR}"/${P}-dont-probe-rdma-mounts.patch
-
 	# Fix for bug #210762
 	# Upstream reference: http://thread.gmane.org/gmane.linux.kernel.autofs/4203
 	"${FILESDIR}"/${PN}-5.0.3-heimdal.patch
