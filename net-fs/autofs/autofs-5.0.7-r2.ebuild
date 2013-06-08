@@ -8,7 +8,7 @@ AUTOTOOLS_AUTORECONF=true
 
 inherit autotools-utils linux-info multilib
 
-PATCH_VER=2
+PATCH_VER=3
 [[ -n ${PATCH_VER} ]] && \
 	PATCHSET_URI="http://dev.gentoo.org/~jlec/distfiles/${P}-patches-${PATCH_VER}.tar.lzma"
 
