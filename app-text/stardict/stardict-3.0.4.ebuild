@@ -62,7 +62,8 @@ DEPEND="${COMMON_DEPEND}
 RESTRICT="test"
 src_prepare(){
 	# FIXME: check sigc++
-	epatch "${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch
+	epatch "${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch \
+		"${FILESDIR}"/${P}-fix-glib-thread.patch
 
 	epatch_user
 	gnome2_src_prepare
