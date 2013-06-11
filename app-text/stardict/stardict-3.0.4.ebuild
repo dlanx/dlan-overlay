@@ -62,6 +62,7 @@ src_prepare(){
 	# FIXME: check sigc++
 	epatch "${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch
 
+	epatch_user
 	gnome2_src_prepare
 }
 
