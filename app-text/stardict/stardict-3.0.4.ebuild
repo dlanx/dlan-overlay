@@ -58,11 +58,12 @@ DEPEND="${COMMON_DEPEND}
 	sys-devel/gettext"
 
 RESTRICT="test"
+src_prepare(){
+	# FIXME: check sigc++
+	epatch "${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch
 
-# FIXME: check sigc++
-PATCHES=(
-	"${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch
-	)
+	gnome2_src_prepare
+}
 
 # FIXME	--disable-schemas-install"
 src_configure(){
