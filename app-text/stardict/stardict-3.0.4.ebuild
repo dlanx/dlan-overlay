@@ -77,7 +77,6 @@ src_configure(){
 		--disable-esd-support
 		--disable-advertisement
 		--disable-updateinfo
-		--disable-deprecations
 		--disable-maemo-support
 		--disable-darwin-support
 		$(use_enable dictdotcn)
@@ -100,6 +99,11 @@ src_configure(){
 		G2CONF+="--enable-scrollkeeper"
 	else
 		G2CONF+="--disable-scrollkeeper"
+	fi
+	if use gucharmap ; then
+		G2CONF+="--enable-deprecations"
+	else
+		G2CONF+="--disable-deprecations"
 	fi
 	gnome2_src_configure
 }
