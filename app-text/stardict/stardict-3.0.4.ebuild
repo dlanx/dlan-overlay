@@ -22,7 +22,8 @@ SRC_URI="http://${PN}-3.googlecode.com/files/${P}.tar.bz2
 LICENSE="CPL-1.0 GPL-3 LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="espeak festival gnome gucharmap qqwry pronounce spell gpe qqwry tools"
+IUSE="dictdotcn espeak festival gnome gucharmap htmlparse spell gpe
+	powerwordparse pronounce qqwry tools updateinfo wikiparse wordnet xdxfparse"
 
 COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libsigc++:2
@@ -68,18 +69,30 @@ src_prepare(){
 
 # FIXME	--disable-schemas-install"
 src_configure(){
-	G2CONF="--disable-esd-support
-		$(use_enable tools)
-		$(use_enable gnome gnome-support)
-		$(use_enable spell)
-		$(use_enable gucharmap)
-		$(use_enable espeak espeak)
-		$(use_enable gpe gpe-support)
-		$(use_enable qqwry)
-		$(use_enable espeak)
-		$(use_enable festival)
+	G2CONF="
+		--enable-dict
+		--disable-option-checking
+		--disable-esd-support
 		--disable-advertisement
 		--disable-updateinfo
+		--disable-deprecations
+		--disable-maemo-support
+		--disable-darwin-support
+		$(use_enable dictdotcn)
+		$(use_enable espeak)
+		$(use_enable festival)
+		$(use_enable gnome gnome-support)
+		$(use_enable gpe gpe-support)
+		$(use_enable gucharmap)
+		$(use_enable htmlparse)
+		$(use_enable powerwordparse)
+		$(use_enable qqwry)
+		$(use_enable spell)
+		$(use_enable tools)
+		$(use_enable updateinfo)
+		$(use_enable wikiparse)
+		$(use_enable wordnet)
+		$(use_enable xdxfparse)
 		"
 	if use gnome ; then
 		G2CONF+="--enable-scrollkeeper"
