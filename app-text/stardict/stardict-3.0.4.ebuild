@@ -6,9 +6,7 @@
 #       their indexes seem to be in a different format. So we'll keep them
 #       seperate for now.
 
-# NOTE: Festival plugin crashes, bug 188684. Disable for now.
-
-EAPI=4
+EAPI=5
 
 GNOME2_LA_PUNT=yes
 GCONF_DEBUG=no
@@ -23,10 +21,10 @@ SRC_URI="http://${PN}-3.googlecode.com/files/${P}.tar.bz2
 
 LICENSE="CPL-1.0 GPL-3 LGPL-2"
 SLOT="0"
-KEYWORDS="amd64 ppc ppc64 sparc x86"
-IUSE="espeak gnome gucharmap qqwry pronounce spell tools"
+KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
+IUSE="espeak festival gnome gucharmap qqwry pronounce spell gpe qqwry tools"
 
-COMMON_DEPEND=">=dev-libs/glib-2.16
+COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libsigc++:2
 	sys-libs/zlib
 	>=x11-libs/gtk+-2.20:2
@@ -36,7 +34,10 @@ COMMON_DEPEND=">=dev-libs/glib-2.16
 		>=gnome-base/libgnomeui-2
 		>=gnome-base/gconf-2
 		>=gnome-base/orbit-2
+		app-text/scrollkeeper
+		app-text/gnome-doc-utils
 		)
+	gpe? ( gpe-base/libgpewidget )
 	gucharmap? ( >=gnome-extra/gucharmap-2.22.1:0 )
 	spell? ( >=app-text/enchant-1.2 )
 	tools? (
@@ -45,41 +46,45 @@ COMMON_DEPEND=">=dev-libs/glib-2.16
 		virtual/mysql
 		)"
 RDEPEND="${COMMON_DEPEND}
-	espeak? ( >=app-accessibility/espeak-1.29 )"
+	espeak? ( >=app-accessibility/espeak-1.29 )
+	festival? ( app-accessibility/festival )"
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xml-dtd:4.3
 	app-text/gnome-doc-utils
 	dev-libs/libxslt
+	dev-libs/libsigc++
 	dev-util/intltool
 	virtual/pkgconfig
 	sys-devel/gettext"
 
 RESTRICT="test"
 
-pkg_setup() {
-	G2CONF="$(use_enable tools)
-		--disable-scrollkeeper
+# FIXME: check sigc++
+PATCHES=(
+	"${FILESDIR}"/${PN}-3.0.3-zlib-1.2.5.2.patch
+	)
+
+# FIXME	--disable-schemas-install"
+src_configure(){
+	G2CONF="--disable-esd-support
+		$(use_enable tools)
+		$(use_enable gnome gnome-support)
 		$(use_enable spell)
 		$(use_enable gucharmap)
-		--disable-festival
-		$(use_enable espeak)
+		$(use_enable espeak espeak)
+		$(use_enable gpe gpe-support)
 		$(use_enable qqwry)
+		$(use_enable espeak)
+		$(use_enable festival)
+		--disable-advertisement
 		--disable-updateinfo
-		$(use_enable gnome gnome-support)
-		--disable-gpe-support
-		--disable-schemas-install"
-}
-
-src_prepare() {
-	epatch \
-		"${FILESDIR}"/${P}-correct-glib-include.patch \
-		"${FILESDIR}"/${P}-entry.patch \
-		"${FILESDIR}"/${P}-gcc46.patch \
-		"${FILESDIR}"/${P}-compositelookup_cpp.patch \
-		"${FILESDIR}"/${P}-overflow.patch \
-		"${FILESDIR}"/${P}-zlib-1.2.5.2.patch
-
-	gnome2_src_prepare
+		"
+	if use gnome ; then
+		G2CONF+="--enable-scrollkeeper"
+	else
+		G2CONF+="--disable-scrollkeeper"
+	fi
+	gnome2_src_configure
 }
 
 src_install() {
