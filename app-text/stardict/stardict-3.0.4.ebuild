@@ -37,7 +37,6 @@ COMMON_DEPEND="dev-libs/glib:2
 		>=gnome-base/gconf-2
 		>=gnome-base/orbit-2
 		app-text/scrollkeeper
-		app-text/gnome-doc-utils
 		)
 	gpe? ( gpe-base/libgpewidget )
 	gucharmap? ( >=gnome-extra/gucharmap-2.22.1:0 )
@@ -52,9 +51,9 @@ RDEPEND="${COMMON_DEPEND}
 	festival? ( app-accessibility/festival )"
 DEPEND="${COMMON_DEPEND}
 	app-text/docbook-xml-dtd:4.3
-	app-text/gnome-doc-utils
+	gnome? ( app-text/gnome-doc-utils )
 	dev-libs/libxslt
-	dev-libs/libsigc++
+	dev-libs/libsigc++:2
 	dev-util/intltool
 	virtual/pkgconfig
 	sys-devel/gettext"
