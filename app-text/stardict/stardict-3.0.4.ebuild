@@ -22,8 +22,9 @@ SRC_URI="http://${PN}-3.googlecode.com/files/${P}.tar.bz2
 LICENSE="CPL-1.0 GPL-3 LGPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~ppc ~ppc64 ~sparc ~x86"
-IUSE="dictdotcn espeak festival gnome gucharmap htmlparse spell gpe
-	powerwordparse pronounce qqwry tools updateinfo wikiparse wordnet xdxfparse"
+IUSE="+dictdotcn espeak festival gnome +gucharmap +htmlparse +spell
+	gpe +powerwordparse pronounce qqwry tools +updateinfo +wikiparse
+	+wordnet +xdxfparse"
 
 COMMON_DEPEND="dev-libs/glib:2
 	dev-libs/libsigc++:2
