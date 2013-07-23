@@ -58,7 +58,7 @@ src_configure() {
 		$(use_enable mount-locking)
 		--disable-ext-env
 		--enable-sloppy-mount
-		--enable-forced-shutdown
+		--enable-force-shutdown
 		--enable-ignore-busy
 	)
 	autotools-utils_src_configure
