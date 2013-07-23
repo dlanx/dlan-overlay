@@ -64,6 +64,10 @@ src_configure() {
 	autotools-utils_src_configure
 }
 
+src_compile() {
+	autotools-utils_src_compile DONTSTRIP=1
+}
+
 src_install() {
 	autotools-utils_src_install
 
