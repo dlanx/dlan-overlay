@@ -29,7 +29,7 @@ REQUIRED_USE="sasl? ( ldap )"
 
 # currently, sasl code assumes the presence of kerberosV
 RDEPEND=">=sys-apps/util-linux-2.20
-	dmalloc? ( dev-libs/dmalloc )
+	dmalloc? ( dev-libs/dmalloc[threads] )
 	hesiod? ( net-dns/hesiod )
 	ldap? ( >=net-nds/openldap-2.0
 		sasl? (
