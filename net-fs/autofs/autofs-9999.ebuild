@@ -40,11 +40,6 @@ DEPEND="${RDEPEND}
 
 CONFIG_CHECK="~AUTOFS4_FS"
 
-src_prepare() {
-	epatch_user
-	autotools-utils_src_prepare
-}
-
 src_configure() {
 	# --with-confdir is for bug #361481
 	# --with-mapdir is for bug #385113
