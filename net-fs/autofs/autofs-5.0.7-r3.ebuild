@@ -55,7 +55,7 @@ PATCHES=(
 	#    #154797: Respect CC and CFLAGS
 	#    #253412: Respect LDFLAGS
 	#    #247969: Link order for --as-needed
-	"${FILESDIR}"/${PN}-5.0.6-respect-user-flags-and-fix-asneeded-r2.patch
+	"${FILESDIR}"/${PN}-5.0.7-respect-user-flags-and-fix-asneeded-r3.patch
 
 	# Upstream reference: http://thread.gmane.org/gmane.linux.kernel.autofs/5371
 	"${FILESDIR}"/${PN}-5.0.5-fix-install-deadlink.patch
