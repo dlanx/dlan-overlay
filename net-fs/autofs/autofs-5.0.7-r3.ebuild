@@ -64,6 +64,7 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-5.0.6-revert-ldap.patch #381315
 	"${FILESDIR}"/${PN}-5.0.7-sasl-def.patch #469324
 	"${FILESDIR}"/${PN}-5.0.7-libtirpc-link.patch #464120
+	"${FILESDIR}"/${PN}-5.0.7-parallel-make.patch
 	)
 
 AUTOTOOLS_IN_SOURCE_BUILD=1
