@@ -6,7 +6,7 @@ EAPI=5
 
 AUTOTOOLS_AUTORECONF=true
 
-inherit autotools-utils linux-info multilib
+inherit autotools-utils linux-info multilib systemd
 
 PATCH_VER=3
 [[ -n ${PATCH_VER} ]] && \
@@ -81,9 +81,6 @@ src_prepare() {
 src_configure() {
 	# --with-confdir is for bug #361481
 	# --with-mapdir is for bug #385113
-	# for systemd support (not enabled yet):
-	#   --with-systemd
-	#   --disable-move-mount: requires kernel >=2.6.39
 	local myeconfargs=(
 		--with-confdir=/etc/conf.d
 		--with-mapdir=/etc/autofs
@@ -93,6 +90,8 @@ src_configure() {
 		$(use_with sasl)
 		$(use_with hesiod)
 		$(use_enable mount-locking)
+		--with-systemd
+		systemddir="$(systemd_get_unitdir)" #bug #479492
 		--disable-ext-env
 		--enable-sloppy-mount # bug #453778
 		--enable-forced-shutdown
