@@ -66,6 +66,8 @@ src_prepare() {
 	sed -e '/testsnaps/d' -i src/Makefile.am || die
 	sed -e "/bin=/ s:lib:$(get_libdir):" "${FILESDIR}"/${PN}.initd \
 		> "${T}"/${PN}.initd || die
+
+	epatch_user
 	eautoreconf
 }
 

@@ -88,7 +88,6 @@ src_configure() {
 		--docdir="${EPREFIX}/usr/share/doc/${PF}" \
 		--includedir=/usr/include \
 		$(use_with debug) \
-		$(use_enable debug pgrefdebugging) \
 		$(use_with fuse) \
 		$(use_with libaio) \
 		$(use_with libatomic libatomic-ops) \
