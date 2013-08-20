@@ -8,7 +8,7 @@ AUTOTOOLS_AUTORECONF=true
 AUTOTOOLS_IN_SOURCE_BUILD=1
 
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/linux/storage/autofs/autofs.git"
-inherit autotools-utils linux-info multilib git-2
+inherit autotools-utils linux-info multilib git-2 systemd
 
 DESCRIPTION="Kernel based automounter"
 HOMEPAGE="http://www.linux-consulting.com/Amd_AutoFS/autofs.html"
@@ -44,9 +44,6 @@ CONFIG_CHECK="~AUTOFS4_FS"
 src_configure() {
 	# --with-confdir is for bug #361481
 	# --with-mapdir is for bug #385113
-	# for systemd support (not enabled yet):
-	#   --with-systemd
-	#   --disable-move-mount: requires kernel >=2.6.39
 	local myeconfargs=(
 		--with-confdir=/etc/conf.d
 		--with-mapdir=/etc/autofs
@@ -56,8 +53,10 @@ src_configure() {
 		$(use_with sasl)
 		$(use_with hesiod)
 		$(use_enable mount-locking)
+		--with-systemd
+		systemddir="$(systemd_get_unitdir)" #bug #479492
 		--disable-ext-env
-		--enable-sloppy-mount
+		--enable-sloppy-mount # bug #453778
 		--enable-force-shutdown
 		--enable-ignore-busy
 	)
