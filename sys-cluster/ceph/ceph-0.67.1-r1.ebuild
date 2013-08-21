@@ -33,7 +33,6 @@ CDEPEND="
 	dev-libs/libedit
 	dev-libs/leveldb
 	dev-libs/crypto++
-	dev-lang/perl
 	dev-python/flask
 	dev-python/requests
 	sys-apps/keyutils
@@ -41,7 +40,6 @@ CDEPEND="
 	sys-apps/util-linux
 	sys-block/parted
 	sys-fs/cryptsetup
-	sys-libs/gdbm
 	dev-libs/libxml2
 	fuse? ( sys-fs/fuse )
 	libatomic? ( dev-libs/libatomic_ops )
