@@ -5,10 +5,9 @@
 EAPI=5
 
 AUTOTOOLS_AUTORECONF=true
-AUTOTOOLS_IN_SOURCE_BUILD=1
 
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/linux/storage/autofs/autofs.git"
-inherit autotools-utils linux-info multilib git-2 systemd
+inherit autotools-utils linux-info multilib git-2
 
 DESCRIPTION="Kernel based automounter"
 HOMEPAGE="http://www.linux-consulting.com/Amd_AutoFS/autofs.html"
@@ -42,6 +41,8 @@ DEPEND="${RDEPEND}
 CONFIG_CHECK="~AUTOFS4_FS"
 
 src_configure() {
+	# bug #483716
+	tc-export AR
 	# --with-confdir is for bug #361481
 	# --with-mapdir is for bug #385113
 	local myeconfargs=(
@@ -53,12 +54,13 @@ src_configure() {
 		$(use_with sasl)
 		$(use_with hesiod)
 		$(use_enable mount-locking)
-		--with-systemd
-		systemddir="$(systemd_get_unitdir)" #bug #479492
 		--disable-ext-env
 		--enable-sloppy-mount # bug #453778
 		--enable-force-shutdown
 		--enable-ignore-busy
+		--with-systemd
+		systemddir="$(systemd_get_unitdir)" #bug #479492
+		RANLIB="$(type -P $(tc-getRANLIB))" # bug #483716
 	)
 	autotools-utils_src_configure
 }
