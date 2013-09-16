@@ -16,7 +16,7 @@ HOMEPAGE="http://connman.net"
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS=""
-IUSE="bluetooth debug doc dundee examples +ethernet neard ofono openvpn pacrunner policykit selinux threads tools vpnc +wifi +wispr -nmcompat"
+IUSE="bluetooth debug doc dundee examples +ethernet neard ofono openvpn pacrunner policykit selinux tools vpnc +wifi +wispr -nmcompat"
 
 RDEPEND=">=dev-libs/glib-2.16
 	>=sys-apps/dbus-1.2.24
@@ -64,7 +64,6 @@ src_configure() {
 		$(use_enable policykit polkit) \
 		$(use_enable pacrunner ) \
 		$(use_enable selinux ) \
-		$(use_enable threads) \
 		$(use_enable tools) \
 		$(use_enable openvpn openvpn builtin) \
 		$(use_enable vpnc vpnc builtin) \
