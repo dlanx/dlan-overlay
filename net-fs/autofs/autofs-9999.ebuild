@@ -5,9 +5,10 @@
 EAPI=5
 
 AUTOTOOLS_AUTORECONF=true
+AUTOTOOLS_IN_SOURCE_BUILD=true
 
 EGIT_REPO_URI="git://git.kernel.org/pub/scm/linux/storage/autofs/autofs.git"
-inherit autotools-utils linux-info multilib git-2
+inherit autotools-utils linux-info multilib systemd toolchain-funcs git-2
 
 DESCRIPTION="Kernel based automounter"
 HOMEPAGE="http://www.linux-consulting.com/Amd_AutoFS/autofs.html"
