@@ -2,14 +2,15 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/app-office/openerp/openerp-7.0.20130219-r5.ebuild,v 1.3 2013/04/11 03:22:34 patrick Exp $
 
-EAPI="3"
-PYTHON_DEPEND="2"
+EAPI="5"
 
-inherit eutils distutils user
+PYTHON_COMPAT=( python2_7 )
+DISTUTILS_SINGLE_IMPL=1
+
+inherit eutils distutils-r1 user
 
 DESCRIPTION="Open Source ERP & CRM"
 HOMEPAGE="http://www.openerp.com/"
-#yes, this is definitely a horrible URI
 MY_PV=${PV/7.0./7.0-}
 FNAME="${PN}-${MY_PV}-231022"
 SRC_URI="http://nightly.openerp.com/7.0/nightly/src/${FNAME}.tar.gz"
@@ -21,35 +22,36 @@ IUSE="+postgres ldap ssl"
 
 CDEPEND="!app-office/openerp-web
 	postgres? ( dev-db/postgresql-server )
-	dev-python/psutil
-	dev-python/docutils
-	dev-python/lxml
-	dev-python/psycopg:2
-	dev-python/pychart
-	dev-python/pyparsing
-	dev-python/reportlab
-	dev-python/simplejson
+	dev-python/psutil[${PYTHON_USEDEP}]
+	dev-python/docutils[${PYTHON_USEDEP}]
+	dev-python/lxml[${PYTHON_USEDEP}]
+	dev-python/psycopg:2[${PYTHON_USEDEP}]
+	dev-python/pychart[${PYTHON_USEDEP}]
+	dev-python/pyparsing[${PYTHON_USEDEP}]
+	dev-python/reportlab[${PYTHON_USEDEP}]
+	dev-python/simplejson[${PYTHON_USEDEP}]
 	media-gfx/pydot
-	dev-python/vobject
-	dev-python/mako
-	dev-python/mock
-	dev-python/pyyaml
-	dev-python/Babel
-	dev-python/gdata
-	ldap? ( dev-python/python-ldap )
-	dev-python/python-openid
-	dev-python/werkzeug
-	dev-python/xlwt
-	dev-python/feedparser
-	dev-python/python-dateutil
-	dev-python/pywebdav
-	ssl? ( dev-python/pyopenssl )
-	dev-python/vatnumber
-	dev-python/zsi
-	dev-python/mock
-	dev-python/unittest2
-	dev-python/jinja
-	dev-python/matplotlib"
+	dev-python/vobject[${PYTHON_USEDEP}]
+	dev-python/mako[${PYTHON_USEDEP}]
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/pyyaml[${PYTHON_USEDEP}]
+	dev-python/Babel[${PYTHON_USEDEP}]
+	dev-python/gdata[${PYTHON_USEDEP}]
+	ldap? ( dev-python/python-ldap[${PYTHON_USEDEP}] )
+	dev-python/python-openid[${PYTHON_USEDEP}]
+	dev-python/werkzeug[${PYTHON_USEDEP}]
+	dev-python/xlwt[${PYTHON_USEDEP}]
+	dev-python/feedparser[${PYTHON_USEDEP}]
+	dev-python/pillow[jpeg,${PYTHON_USEDEP}]
+	dev-python/python-dateutil[${PYTHON_USEDEP}]
+	dev-python/pywebdav[${PYTHON_USEDEP}]
+	ssl? ( dev-python/pyopenssl[${PYTHON_USEDEP}] )
+	dev-python/vatnumber[${PYTHON_USEDEP}]
+	dev-python/zsi[${PYTHON_USEDEP}]
+	dev-python/mock[${PYTHON_USEDEP}]
+	dev-python/unittest2[${PYTHON_USEDEP}]
+	dev-python/jinja[${PYTHON_USEDEP}]
+	dev-python/matplotlib[${PYTHON_USEDEP}]"
 
 RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}"
@@ -59,30 +61,24 @@ OPENERP_GROUP="openerp"
 
 S="${WORKDIR}/${FNAME}"
 
-pkg_setup() {
-	python_set_active_version 2
-	python_pkg_setup
-}
-
-src_install() {
-	distutils_src_install
+python_install_all() {
+	distutils-r1_python_install_all
 
 	newinitd "${FILESDIR}/${PN}-2" "${PN}"
 	newconfd "${FILESDIR}/openerp-confd-2" "${PN}"
 	keepdir /var/log/openerp
 
 	insinto /etc/logrotate.d
-	newins "${FILESDIR}"/openerp.logrotate openerp || die
+	newins "${FILESDIR}"/openerp.logrotate openerp
 	dodir /etc/openerp
 	insinto /etc/openerp
-	newins "${FILESDIR}"/openerp.cfg.2 openerp.cfg || die
+	newins "${FILESDIR}"/openerp.cfg.2 openerp.cfg
 
 	# #453424 Fix error on /usr/openerp/import_xml.rng
-	dosym /usr/${PN}/import_xml.rng $(python_get_sitedir)/${PN}/import_xml.rng || die
+	dosym /usr/${PN}/import_xml.rng $(python_get_sitedir)/${PN}/import_xml.rng
 
 	# #453424 Fix error on /usr/openerp/addons/base/res/res_company_logo.png
-	dosym /usr/${NAME}/addons/base/res/res_company_logo.png $(python_get_sitedir)/${NAME}/addons/base/res/res_company_logo.png || die
-
+	dosym /usr/${PN}/addons/base/res/res_company_logo.png $(python_get_sitedir)/${PN}/addons/base/res/res_company_logo.png
 }
 
 pkg_preinst() {
