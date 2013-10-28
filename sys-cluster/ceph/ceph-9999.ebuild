@@ -3,6 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/sys-cluster/ceph/ceph-9999.ebuild,v 1.4 2013/04/12 10:21:14 alexxy Exp $
 
 EAPI=5
+PYTHON_COMPAT=( python{2_6,2_7} )
 
 if [[ $PV = *9999* ]]; then
 	scm_eclass=git-2
@@ -107,6 +108,10 @@ src_install() {
 
 	newinitd "${T}/${PN}.initd" ${PN}
 	newconfd "${FILESDIR}/${PN}.confd" ${PN}
+
+	python_replicate_script \
+		"${ED}"/usr/sbin/{ceph-disk,ceph-create-keys} \
+		"${ED}"/usr/bin/{ceph,ceph-rest-api}
 
 	#install udev rules
 	udev_dorules udev/50-rbd.rules

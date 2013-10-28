@@ -3,6 +3,7 @@
 # $Header: /var/cvsroot/gentoo-x86/sys-cluster/ceph/ceph-0.61.1.ebuild,v 1.1 2013/05/09 21:05:40 alexxy Exp $
 
 EAPI=5
+PYTHON_COMPAT=( python{2_6,2_7} )
 
 if [[ $PV = *9999* ]]; then
 	scm_eclass=git-2
@@ -16,7 +17,7 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-inherit autotools eutils multilib udev ${scm_eclass}
+inherit autotools eutils multilib python-r1 udev ${scm_eclass}
 
 DESCRIPTION="Ceph distributed filesystem"
 HOMEPAGE="http://ceph.com/"
@@ -33,8 +34,8 @@ CDEPEND="
 	dev-libs/libedit
 	dev-libs/leveldb
 	dev-libs/crypto++
-	dev-python/flask
-	dev-python/requests
+	dev-python/flask[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
 	sys-apps/keyutils
 	sys-apps/hdparm
 	sys-apps/util-linux
@@ -57,7 +58,7 @@ CDEPEND="
 	java? ( dev-java/junit:4 )
 	tcmalloc? ( dev-util/google-perftools )
 	profiler? ( dev-util/google-perftools )
-	virtual/python-argparse
+	virtual/python-argparse[${PYTHON_USEDEP}]
 	"
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
@@ -109,8 +110,6 @@ src_install() {
 
 	prune_libtool_files --all
 
-	rmdir "${ED}/usr/sbin"
-
 	exeinto /usr/$(get_libdir)/ceph
 	newexe src/init-ceph ceph_init.sh
 
@@ -125,6 +124,10 @@ src_install() {
 
 	newinitd "${T}/${PN}.initd" ${PN}
 	newconfd "${FILESDIR}/${PN}.confd" ${PN}
+
+	python_replicate_script \
+		"${ED}"/usr/sbin/{ceph-disk,ceph-create-keys} \
+		"${ED}"/usr/bin/{ceph,ceph-rest-api}
 
 	#install udev rules
 	udev_dorules udev/50-rbd.rules
