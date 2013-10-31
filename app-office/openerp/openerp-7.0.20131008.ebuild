@@ -42,7 +42,6 @@ CDEPEND="!app-office/openerp-web
 	dev-python/werkzeug[${PYTHON_USEDEP}]
 	dev-python/xlwt[${PYTHON_USEDEP}]
 	dev-python/feedparser[${PYTHON_USEDEP}]
-	dev-python/pillow[jpeg,${PYTHON_USEDEP}]
 	dev-python/python-dateutil[${PYTHON_USEDEP}]
 	dev-python/pywebdav[${PYTHON_USEDEP}]
 	ssl? ( dev-python/pyopenssl[${PYTHON_USEDEP}] )
@@ -51,7 +50,8 @@ CDEPEND="!app-office/openerp-web
 	dev-python/mock[${PYTHON_USEDEP}]
 	dev-python/unittest2[${PYTHON_USEDEP}]
 	dev-python/jinja[${PYTHON_USEDEP}]
-	dev-python/matplotlib[${PYTHON_USEDEP}]"
+	dev-python/matplotlib[${PYTHON_USEDEP}]
+	virtual/python-imaging[jpeg,${PYTHON_USEDEP}]"
 
 RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}"
