@@ -59,8 +59,7 @@ src_configure() {
 		--enable-sloppy-mount # bug #453778
 		--enable-force-shutdown
 		--enable-ignore-busy
-		--with-systemd
-		systemddir="$(systemd_get_unitdir)" #bug #479492
+		--with-systemd="$(systemd_get_unitdir)" #bug #479492
 		RANLIB="$(type -P $(tc-getRANLIB))" # bug #483716
 	)
 	autotools-utils_src_configure
