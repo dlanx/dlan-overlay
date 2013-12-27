@@ -24,7 +24,7 @@ HOMEPAGE="http://ceph.com/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="debug fuse gtk libatomic +libaio radosgw static-libs tcmalloc"
+IUSE="debug fuse gtk java libatomic +libaio libs3 radosgw static-libs ocf profiler rest-bench tcmalloc"
 
 CDEPEND="
 	app-arch/snappy
@@ -44,6 +44,7 @@ CDEPEND="
 	dev-libs/libxml2
 	fuse? ( sys-fs/fuse )
 	libatomic? ( dev-libs/libatomic_ops )
+	libs3? ( net-libs/libs3 )
 	gtk? (
 		x11-libs/gtk+:2
 		dev-cpp/gtkmm:2.4
@@ -54,7 +55,9 @@ CDEPEND="
 		dev-libs/expat
 		net-misc/curl
 	)
+	java? ( dev-java/junit:4 )
 	tcmalloc? ( dev-util/google-perftools )
+	profiler? ( dev-util/google-perftools )
 	virtual/python-argparse[${PYTHON_USEDEP}]
 	"
 DEPEND="${CDEPEND}
@@ -84,9 +87,14 @@ src_configure() {
 		$(use_with fuse) \
 		$(use_with libaio) \
 		$(use_with libatomic libatomic-ops) \
+		$(use_with libs3 system-libs3) \
 		$(use_with radosgw) \
 		$(use_with gtk gtk2) \
+		$(use_with ocf) \
+		$(use_with profiler) \
+		$(use_with rest-bench) \
 		$(use_enable static-libs static) \
+		$(use_enable java cephfs-java) \
 		$(use_with tcmalloc)
 }
 
