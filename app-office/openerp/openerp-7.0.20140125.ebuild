@@ -12,7 +12,7 @@ inherit eutils distutils-r1 user
 DESCRIPTION="Open Source ERP & CRM"
 HOMEPAGE="http://www.openerp.com/"
 MY_PV=${PV/7.0./7.0-}
-FNAME="${PN}-${MY_PV}-231022"
+FNAME="${PN}-${MY_PV}-002455"
 SRC_URI="http://nightly.openerp.com/7.0/nightly/src/${FNAME}.tar.gz"
 
 LICENSE="GPL-2"
