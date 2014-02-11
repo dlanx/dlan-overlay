@@ -17,26 +17,30 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-inherit autotools eutils multilib python-any-r1 udev ${scm_eclass}
+inherit autotools eutils multilib python-r1 udev ${scm_eclass}
 
 DESCRIPTION="Ceph distributed filesystem"
 HOMEPAGE="http://ceph.com/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="cryptopp debug fuse gtk libatomic +libaio +nss radosgw static-libs tcmalloc"
+IUSE="debug fuse gtk libatomic +libaio radosgw static-libs tcmalloc"
 
 CDEPEND="
 	app-arch/snappy
-	dev-libs/boost:=[threads]
+	dev-libs/boost[threads]
 	dev-libs/fcgi
 	dev-libs/libaio
 	dev-libs/libedit
 	dev-libs/leveldb[snappy]
-	nss? ( dev-libs/nss )
-	cryptopp? ( dev-libs/crypto++ )
+	dev-libs/crypto++
+	dev-python/flask[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
 	sys-apps/keyutils
+	sys-apps/hdparm
 	sys-apps/util-linux
+	sys-block/parted
+	sys-fs/cryptsetup
 	dev-libs/libxml2
 	fuse? ( sys-fs/fuse )
 	libatomic? ( dev-libs/libatomic_ops )
@@ -51,32 +55,16 @@ CDEPEND="
 		net-misc/curl
 	)
 	tcmalloc? ( dev-util/google-perftools )
-	$(python_gen_any_dep '
 	virtual/python-argparse[${PYTHON_USEDEP}]
-	' )
 	${PYTHON_DEPS}
 	"
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
-	sys-apps/hdparm
-	sys-block/parted
-	sys-fs/cryptsetup
-	sys-fs/btrfs-progs
-	$(python_gen_any_dep '
-	dev-python/flask[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
-	' )"
-REQUIRED_USE="
-	^^ ( nss cryptopp )
-	${PYTHON_REQUIRED_USE}
-	"
+	sys-fs/btrfs-progs"
+REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 STRIP_MASK="/usr/lib*/rados-classes/*"
-
-pkg_setup() {
-	python-any-r1_pkg_setup
-}
 
 src_prepare() {
 	if [ ! -z ${PATCHES[@]} ]; then
@@ -98,8 +86,6 @@ src_configure() {
 		$(use_with fuse) \
 		$(use_with libaio) \
 		$(use_with libatomic libatomic-ops) \
-		$(use_with nss) \
-		$(use_with cryptopp) \
 		$(use_with radosgw) \
 		$(use_with gtk gtk2) \
 		$(use_enable static-libs static) \
@@ -126,7 +112,7 @@ src_install() {
 	newinitd "${T}/${PN}.initd" ${PN}
 	newconfd "${FILESDIR}/${PN}.confd" ${PN}
 
-	_python_rewrite_shebang \
+	python_replicate_script \
 		"${ED}"/usr/sbin/{ceph-disk,ceph-create-keys} \
 		"${ED}"/usr/bin/{ceph,ceph-rest-api}
 

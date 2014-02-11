@@ -84,6 +84,7 @@ src_prepare() {
 	fi
 	sed -e "/bin=/ s:lib:$(get_libdir):" "${FILESDIR}"/${PN}.initd \
 		> "${T}"/${PN}.initd || die
+	sed -e '/^ceph_sbindir =/s:$(exec_prefix)::' -i src/Makefile.am || die
 
 	epatch_user
 	eautoreconf
