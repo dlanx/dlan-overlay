@@ -1,6 +1,6 @@
 # Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/sys-cluster/ceph/ceph-9999.ebuild,v 1.6 2014/01/15 13:45:32 dlan Exp $
+# $Header: /var/cvsroot/gentoo-x86/sys-cluster/ceph/ceph-0.72.2-r1.ebuild,v 1.1 2014/01/15 13:45:32 dlan Exp $
 
 EAPI=5
 PYTHON_COMPAT=( python{2_6,2_7} )
@@ -17,30 +17,26 @@ else
 	KEYWORDS="~amd64 ~x86"
 fi
 
-inherit autotools eutils multilib python-r1 udev ${scm_eclass}
+inherit autotools eutils multilib python-any-r1 udev ${scm_eclass}
 
 DESCRIPTION="Ceph distributed filesystem"
 HOMEPAGE="http://ceph.com/"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-IUSE="debug fuse gtk libatomic +libaio radosgw static-libs tcmalloc"
+IUSE="cryptopp debug fuse gtk libatomic +libaio +nss radosgw static-libs tcmalloc"
 
 CDEPEND="
 	app-arch/snappy
-	dev-libs/boost[threads]
+	dev-libs/boost:=[threads]
 	dev-libs/fcgi
 	dev-libs/libaio
 	dev-libs/libedit
 	dev-libs/leveldb[snappy]
-	dev-libs/crypto++
-	dev-python/flask[${PYTHON_USEDEP}]
-	dev-python/requests[${PYTHON_USEDEP}]
+	nss? ( dev-libs/nss )
+	cryptopp? ( dev-libs/crypto++ )
 	sys-apps/keyutils
-	sys-apps/hdparm
 	sys-apps/util-linux
-	sys-block/parted
-	sys-fs/cryptsetup
 	dev-libs/libxml2
 	fuse? ( sys-fs/fuse )
 	libatomic? ( dev-libs/libatomic_ops )
@@ -56,15 +52,26 @@ CDEPEND="
 	)
 	tcmalloc? ( dev-util/google-perftools )
 	virtual/python-argparse[${PYTHON_USEDEP}]
-	${PYTHON_DEPS}
 	"
 DEPEND="${CDEPEND}
 	virtual/pkgconfig"
 RDEPEND="${CDEPEND}
+	sys-apps/hdparm
+	sys-block/parted
+	sys-fs/cryptsetup
+	dev-python/flask[${PYTHON_USEDEP}]
+	dev-python/requests[${PYTHON_USEDEP}]
 	sys-fs/btrfs-progs"
-REQUIRED_USE="${PYTHON_REQUIRED_USE}"
+REQUIRED_USE="
+	^^ ( nss cryptopp )
+	${PYTHON_REQUIRED_USE}
+	"
 
 STRIP_MASK="/usr/lib*/rados-classes/*"
+
+pkg_setup() {
+	python-any-r1_pkg_setup
+}
 
 src_prepare() {
 	if [ ! -z ${PATCHES[@]} ]; then
@@ -86,6 +93,8 @@ src_configure() {
 		$(use_with fuse) \
 		$(use_with libaio) \
 		$(use_with libatomic libatomic-ops) \
+		$(use_with nss) \
+		$(use_with cryptopp) \
 		$(use_with radosgw) \
 		$(use_with gtk gtk2) \
 		$(use_enable static-libs static) \
@@ -112,9 +121,9 @@ src_install() {
 	newinitd "${T}/${PN}.initd" ${PN}
 	newconfd "${FILESDIR}/${PN}.confd" ${PN}
 
-	python_replicate_script \
-		"${ED}"/usr/sbin/{ceph-disk,ceph-create-keys} \
-		"${ED}"/usr/bin/{ceph,ceph-rest-api}
+#	python_replicate_script \
+#		"${ED}"/usr/sbin/{ceph-disk,ceph-create-keys} \
+#		"${ED}"/usr/bin/{ceph,ceph-rest-api}
 
 	#install udev rules
 	udev_dorules udev/50-rbd.rules
