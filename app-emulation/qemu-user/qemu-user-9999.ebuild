@@ -5,9 +5,8 @@
 EAPI=5
 
 if [[ ${PV} == *9999 ]]; then
-	EGIT_REPO_URI="git://github.com/susematz/qemu.git"
-	EGIT_BRANCH="aarch64-1.6"
-	EGIT_PROJECT="qemu.susematz"
+	EGIT_REPO_URI="git://git.qemu.org/qemu.git
+		http://git.qemu.org/git/qemu.git"
 	GIT_ECLASS="git-2"
 fi
 
@@ -30,7 +29,7 @@ SLOT="0"
 IUSE=""
 RESTRICT="test"
 
-COMMON_TARGETS="i386 x86_64 alpha arm arm64 cris m68k microblaze microblazeel mips mips64 mipsel ppc ppc64 sh4 sh4eb sparc sparc64 s390x"
+COMMON_TARGETS="i386 x86_64 alpha arm aarch64 cris m68k microblaze microblazeel mips mips64 mipsel ppc ppc64 sh4 sh4eb sparc sparc64 s390x"
 IUSE_USER_TARGETS="${COMMON_TARGETS} armeb ppc64abi32 sparc32plus unicore32"
 
 for target in ${IUSE_USER_TARGETS}; do
