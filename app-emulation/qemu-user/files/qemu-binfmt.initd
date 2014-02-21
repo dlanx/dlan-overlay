@@ -57,11 +57,11 @@ start() {
    if [ $cpu != "alpha" -a -x "/usr/bin/qemu-static-alpha-binfmt" ] ; then
       echo ':alpha:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x26\x90:\xff\xff\xff\xff\xff\xfe\xfe\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-static-alpha-binfmt:P' > /proc/sys/fs/binfmt_misc/register
    fi
-   if [ $cpu != "arm" -a -x "/usr/bin/qemu-static-arm" ] ; then
-      echo   ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff:/usr/bin/qemu-static-arm:P' > /proc/sys/fs/binfmt_misc/register
+   if [ $cpu != "arm" -a -x "/usr/bin/qemu-static-arm-binfmt" ] ; then
+      echo   ':arm:M::\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff:/usr/bin/qemu-static-arm-binfmt:P' > /proc/sys/fs/binfmt_misc/register
    fi
-   if [ $cpu != "arm" -a -x "/usr/bin/qemu-static-aarch64" ] ; then
-      echo   ':arm64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-static-aarch64:P' > /proc/sys/fs/binfmt_misc/register
+   if [ $cpu != "arm" -a -x "/usr/bin/qemu-static-aarch64-binfmt" ] ; then
+      echo   ':aarch64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-static-aarch64-binfmt:P' > /proc/sys/fs/binfmt_misc/register
    fi
    if [ $cpu != "arm" -a -x "/usr/bin/qemu-static-armeb-binfmt" ] ; then
       echo   ':armeb:M::\x7fELF\x01\x02\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff:/usr/bin/qemu-static-armeb-binfmt:P' > /proc/sys/fs/binfmt_misc/register
@@ -113,7 +113,7 @@ stop() {
 
    arches="${arches} i386 i486"
    arches="${arches} alpha"
-   arches="${arches} arm arm64 armeb"
+   arches="${arches} arm aarch64 armeb"
    arches="${arches} sparc"
    arches="${arches} ppc"
    arches="${arches} m68k"

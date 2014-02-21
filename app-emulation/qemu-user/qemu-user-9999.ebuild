@@ -80,6 +80,9 @@ src_prepare() {
 	sed -i 's/^\(C\|OP_C\|HELPER_C\)FLAGS=/\1FLAGS+=/' \
 		Makefile Makefile.target || die
 
+	# add binfmt wrapper
+	epatch "${FILESDIR}"/qemu-1.7-binfmt.patch
+
 	if [[ ${PV} != *9999 ]]; then
 		EPATCH_SOURCE="${WORKDIR}/patches" EPATCH_SUFFIX="patch" \
 		EPATCH_FORCE="yes" epatch
