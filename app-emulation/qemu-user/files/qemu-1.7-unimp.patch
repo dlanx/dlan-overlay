@@ -1,0 +1,12 @@
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 9192977..d2cf582 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -3840,6 +3840,7 @@ int main(int argc, char **argv, char **envp)
+ 
+     optind = parse_args(argc, argv);
+ 
++    qemu_set_log(LOG_UNIMP);
+     /* Zero out regs */
+     memset(regs, 0, sizeof(struct target_pt_regs));
+ 

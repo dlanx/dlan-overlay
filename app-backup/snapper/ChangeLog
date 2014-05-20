@@ -1,0 +1,20 @@
+# ChangeLog for app-backup/snapper
+# Copyright 1999-2014 Gentoo Foundation; Distributed under the GPL v2
+# $Header: $
+
+*snapper-0.2.1 (23 Feb 2014)
+
+  23 Feb 2014; Dainius Masiliūnas (GreatEmerald) <pastas4@gmail.com>
+  +snapper-0.2.1.ebuild, snapper-9999.ebuild, +files/cron-confd.patch:
+  Add non-live ebuild and a timeline cronjob fix for snapper
+
+  11 Mar 2013; Dainius Masiliūnas (GreatEmerald) <pastas4@gmail.com>
+  metadata.xml:
+  New Ebuild for bug #446680
+
+*snapper-9999 (11 Mar 2013)
+
+  11 Mar 2013; Dainius Masiliūnas (GreatEmerald) <pastas4@gmail.com>
+  +snapper-9999.ebuild, +metadata.xml:
+  New Ebuild for bug #446680
+
