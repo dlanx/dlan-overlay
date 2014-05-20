@@ -4,11 +4,11 @@
 
 EAPI=5
 
-inherit eutils
+inherit autotools-utils eutils
 
 if [[ ${PV} = *9999* ]]; then
 	EGIT_REPO_URI="git://github.com/openSUSE/snapper.git"
-	inherit autotools git-2
+	inherit git-2
 	SRC_URI=""
 	KEYWORDS=""
 else
@@ -29,6 +29,7 @@ RDEPEND="dev-libs/boost[threads]
 	dev-libs/icu
 	sys-apps/acl
 	sys-apps/dbus
+	sys-apps/util-linux
 	sys-libs/zlib
 	virtual/libintl
 	btrfs? ( sys-fs/btrfs-progs )
@@ -42,14 +43,15 @@ DEPEND="${RDEPEND}
 
 DOCS="AUTHORS README"
 
-src_prepare() {
+PATCHES=(
+	"${FILESDIR}"/cron-confd.patch
+	)
+#src_prepare() {
 	# Replace sysconfig with conf.d
-	epatch "${FILESDIR}"/cron-confd.patch
-}
+#	epatch "${FILESDIR}"/cron-confd.patch
+#}
 
 src_configure() {
-	# No YaST in Gentoo
-
 	econf  \
 	--with-conf="/etc/conf.d" \
 	$(use_enable btrfs) \
